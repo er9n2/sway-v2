@@ -1,0 +1,126 @@
+configuration {
+    modi: "drun,run,window";
+    icon-theme: "Papirus";
+    show-icons: true;
+    terminal: "alacritty";
+    drun-display-format: "{name}";
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 󰕰  Window";
+    sidebar-mode: true;
+
+    /* --- Navigation --- */
+    kb-mode-next: "Control+N";
+    kb-mode-previous: "Control+B";
+    kb-move-char-back: "Left";
+    kb-move-char-forward: "Right";
+}
+
+@theme "/dev/null"
+
+* {
+    /* Translucent dark background matching macOS Launchpad blur */
+    bg-col:          #000000CC;
+    selected-col:    #ffffff22;
+    accent-white:    #ffffff;
+    fg-col:          #eeeeee;
+    grey:            #a0a0a0;
+
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+window {
+    fullscreen: true;
+    transparency: "real";
+    background-color: @bg-col;
+    padding: 60px 100px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview, mode-switcher ];
+    spacing: 30px;
+}
+
+/* --- Centered Launchpad Search Bar --- */
+inputbar {
+    background-color: #ffffff1a;
+    border-radius: 10px;
+    padding: 8px 16px;
+    margin: 0px 30%;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    background-color: transparent;
+    padding: 4px;
+    text-color: @accent-white;
+}
+
+entry {
+    padding: 4px;
+    text-color: @fg-col;
+    background-color: transparent;
+    placeholder: "Search...";
+    placeholder-color: @grey;
+}
+
+/* --- Launchpad Grid Layout --- */
+listview {
+    background-color: transparent;
+    columns: 6;
+    lines: 4;
+    spacing: 30px;
+    cycle: true;
+    dynamic: true;
+    fixed-columns: true;
+    flow: horizontal; /* Lays items out left-to-right across rows */
+}
+
+element {
+    background-color: transparent;
+    text-color: @fg-col;
+    border-radius: 18px;
+    padding: 16px 8px;
+    orientation: vertical;
+}
+
+element-icon {
+    size: 72px;
+    horizontal-align: 0.5;
+    background-color: transparent;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+    margin: 8px 0px 0px 0px;
+}
+
+element selected {
+    background-color: @selected-col;
+    text-color: @accent-white;
+}
+
+/* --- Bottom Mode Switcher --- */
+mode-switcher {
+    background-color: transparent;
+    margin: 0px 35%;
+    spacing: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: transparent;
+    text-color: @grey;
+    border-radius: 8px;
+}
+
+button selected {
+    background-color: #ffffff20;
+    text-color: @accent-white;
+}

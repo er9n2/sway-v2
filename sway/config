@@ -1,0 +1,120 @@
+# ---------------------------------------------------------
+
+# Variables
+
+# ~/.config/sway/config
+
+# 1. Identify and place your laptop screen at the starting point (0, 0)
+# (Replace 'eDP-1' with your exact laptop display name if 'swaymsg -t get_outputs' shows it differently, like 'eDP-2')
+output eDP-1 position 0 0
+
+# 2. Place your 144Hz main monitor to the right of your laptop screen
+# (Replace 1920 with the horizontal resolution of your laptop screen if it isn't 1080p)
+output HDMI-A-1 mode 1920x1080@144Hz position 1920 0
+
+xwayland enable
+
+set $mod Mod4
+
+# Set your preferred terminal
+set $term foot
+
+# Set application launcher (e.g., wofi, fuzzel, or rofi-wayland)
+set $menu rofi -show drun
+
+# ---------------------------------------------------------
+# Appearance & Gaps
+# ---------------------------------------------------------
+# Inner and outer gaps for that modern, spaced-out look
+gaps inner 8
+gaps outer 4
+
+# Remove title bars and use thin 2px borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# Class                 Border  BG      Text    Indicator Child_Border
+client.focused          #ffffff #ffffff #000000 #ffffff   #ffffff
+client.focused_inactive #000000 #000000 #888888 #000000   #000000
+client.unfocused        #000000 #000000 #888888 #000000   #000000
+# ---------------------------------------------------------
+# Key Bindings
+# ---------------------------------------------------------
+# Start terminal
+bindsym $mod+Return exec $term
+
+# Start launcher
+bindsym $mod+d exec $menu
+
+# Kill focused window
+bindsym $mod+q kill
+
+# Reload Sway configuration
+bindsym $mod+Shift+c reload
+
+# Exit Sway
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Quit Sway?' -B 'Yes' 'swaymsg exit'
+
+# Window States
+bindsym $mod+f fullscreen toggle
+bindsym $mod+space floating toggle
+
+
+
+
+# Directional Window Focus (Arrow Keys)
+bindsym $mod+Up focus up
+bindsym $mod+Down focus down
+bindsym $mod+Left focus left
+bindsym $mod+Right focus right
+
+# Mouse Bindings (Drag & Resize)
+# In Sway, floating modifier is defined, and you hold it while pressing mouse buttons
+floating_modifier $mod
+# ---------------------------------------------------------
+# Hardware & Media Controls (Volume Knob & Brightness)
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+# Hardware & Media Controls (Volume Knob & Brightness)
+# ---------------------------------------------------------
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+exec pipewire
+exec pipewire-pulse
+exec wireplumber
+
+# Using clear relative signs (+/-) before or after values explicitly
+
+bindsym XF86MonBrightnessUp   exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+# ---------------------------------------------------------
+# Autostart
+# ---------------------------------------------------------
+# Wallpaper (requires swaybg)
+exec_always swaybg -i ~/Downloads/wp12829320-4k-vagabond-wallpapers.png 
+
+exec_always autotiling
+
+bar {
+    position top
+    status_command i3status ~/.config/i3status/config
+    font pango:SpaceMono Nerd Font 8
+    colors {
+        statusline #ffffff
+        background #00000000
+        separator  #000000
+        
+        # class            border    backgrd   text
+        focused_workspace  #00000000 #00000000 #ffffff
+        active_workspace   #00000000 #00000000 #ffffff
+        inactive_workspace #00000000 #00000000 #ffffff
+        urgent_workspace   #00000000 #00000000 #ffffff
+    }
+}
+
+input type:touchpad {
+    tap enabled
+}
+
