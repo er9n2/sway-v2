@@ -53,3 +53,31 @@ echo "=== 8. Truncating system logs ==="
 sudo find /var/log -type f -exec truncate -s 0 {} +
 
 echo "=== Deep Cleanup Complete! ==="
+
+if grep -q "Discharging" /sys/class/power_supply/BAT*/status 2>/dev/null; then
+    echo "Status: On Battery"
+    
+    # --------------------------------------------------
+    # PUT YOUR BATTERY COMMANDS BELOW
+    # --------------------------------------------------
+sudo tlp power-saver    
+sudo powertop --auto-tune
+sudo cpupower frequency-set -d 1.4GHz -u 1.6GHz    
+echo 1400000 | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq
+echo 1600000 | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq    
+
+    # --------------------------------------------------
+
+else
+    echo "Status: On AC Power / Charged"
+    
+    # --------------------------------------------------
+    # PUT YOUR PLUGGED-IN / CHARGED COMMANDS BELOW
+    # --------------------------------------------------
+sudo tlp performance
+cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq
+cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq    
+    
+    # --------------------------------------------------
+
+fi
