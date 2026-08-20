@@ -93,7 +93,7 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 # Autostart
 # ---------------------------------------------------------
 # Wallpaper (requires swaybg)
-exec_always swaybg -i ~/Downloads/l438rril8udh1.jpeg 
+exec_always swaybg -i ~/Downloads/wallhaven-vpyekp.jpg  
 exec_always autotiling
 
 exec_always bash ./cleanup.sh
